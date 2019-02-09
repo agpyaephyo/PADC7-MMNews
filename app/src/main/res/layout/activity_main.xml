@@ -20,19 +20,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <include
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello Adapter-based Views"
-            android:layout_centerInParent="true"
+            layout="@layout/view_item_news"
             />
 
-    </RelativeLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
