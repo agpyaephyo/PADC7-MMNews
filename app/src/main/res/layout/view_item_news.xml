@@ -84,10 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_news_hero_image"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:padding="@dimen/margin_medium"
             android:text="3 Likes - 3 Comments - Sent to 6 people"
-            android:textColor="@color/primary" />
+            android:textColor="@color/primary"
+            android:clickable="true"
+            android:foreground="@drawable/bg_ripple_primary"
+            />
 
         <LinearLayout
             android:id="@+id/ll_news_user_actions"
@@ -98,12 +100,14 @@
             android:weightSum="2">
 
             <FrameLayout
+                android:id="@+id/btn_comment_news"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="@drawable/bg_ripple_primary">
 
                 <TextView
-                    android:id="@+id/btn_comment_news"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_tappable_small"
                     android:layout_gravity="center"
@@ -117,12 +121,14 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/btn_send_to_news"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:clickable="true"
+                android:foreground="@drawable/bg_ripple_primary">
 
                 <TextView
-                    android:id="@+id/btn_send_to_news"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_tappable_small"
                     android:layout_gravity="center"
@@ -131,7 +137,8 @@
                     android:gravity="center"
                     android:text="@string/btn_send_to_news"
                     android:textColor="@color/primary"
-                    android:textSize="@dimen/text_regular" />
+                    android:textSize="@dimen/text_regular"
+                    />
 
             </FrameLayout>
 
