@@ -1,4 +1,4 @@
-package com.padcmyanmar.padc7.mmnews;
+package com.padcmyanmar.padc7.mmnews.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsAdapter;
 
 public class MainActivity extends AppCompatActivity {
