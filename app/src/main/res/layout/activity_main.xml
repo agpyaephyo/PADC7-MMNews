@@ -20,21 +20,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_news"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/view_item_news"
-            android:layout_marginLeft="@dimen/margin_medium_2"
-            android:layout_marginRight="@dimen/margin_medium_2"
-            android:layout_marginTop="@dimen/margin_medium_2"
-            />
+            android:layout_height="wrap_content" />
 
-    </ScrollView>
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
