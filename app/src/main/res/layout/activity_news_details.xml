@@ -16,13 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/news_details_appbar_height"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="News Details">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_news_details_images"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/news_details_appbar_height"
-                android:fitsSystemWindows="true" />
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -71,9 +74,9 @@
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                android:layout_height="?attr/actionBarSize" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
