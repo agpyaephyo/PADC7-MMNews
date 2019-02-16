@@ -19,7 +19,7 @@
             android:layout_width="@dimen/logo_size"
             android:layout_height="@dimen/logo_size"
             android:layout_margin="@dimen/margin_card_medium_2"
-            android:src="@drawable/img_publication_logo_placeholder" />
+            android:src="@drawable/dummy_publication_logo" />
 
         <TextView
             android:id="@+id/tv_publication_name"

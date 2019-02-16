@@ -38,7 +38,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="@dimen/margin_medium_2"
                     android:layout_marginBottom="@dimen/news_details_publication_logo_margin_bottom"
-                    android:src="@drawable/img_publication_logo_placeholder" />
+                    android:src="@drawable/dummy_publication_logo" />
 
                 <TextView
                     android:id="@+id/tv_publication_name"

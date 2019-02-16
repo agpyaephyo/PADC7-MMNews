@@ -31,4 +31,10 @@
 အဆိုပါ မဲခွဲဆုံးဖြတ်မှု ရလဒ်များနှင့် ပတ်သက်ပြီး  ရလဒ်များသည် အံ့သြစရာမဟုတ်ကြောင်းနှင့် ပြည် သူများအနေဖြင့် စိတ်ဓာတ်ကျစရာ မလိုဘဲ ရှေ့ဆက်ပြီး မည်သို့သွားရ မည်ဆိုသည်ကို ရှင်းရှင်းလင်းလင်း သိသွားသည်ဟု ဒေါ်အောင်ဆန်းစုကြည်က မဲခွဲဆုံးဖြတ်မှုအပြီး ပြုလုပ်သော သတင်းစာရှင်းလင်းပွဲတွင် ပြောကြားသည်။
 
 လွှတ်တော်လမ်းကြောင်းမှ ၂၀၀၈ ဖွဲ့စည်းပုံအခြေခံဥပဒေ ပြင်ဆင်ရန် မဖြစ်နိုင်သည်ကို သိရှိခဲ့ သည့် ဒေါ်အောင်ဆန်းစုကြည် အနေဖြင့် ၂၀၁၅ အထွေထွေရွေးကောက်ပွဲတွင် NLD ပါတီ သောင်ပြိုကမ်းပြို အနိုင်ရပြီးနောက် ဖွဲ့စည်းပုံပြင်ဆင်ရေးကို ငြိမ်းချမ်းရေး လမ်းကြောင်းမှတစ်ဆင့် ပြင်ဆင်နိုင်ရန် ကြိုးပမ်းဆောင်ရွက်ခဲ့သည်။</string>
+
+    <string name="ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </string>
+    <string name="title_latest_news">Latest News</string>
+    <string name="title_news_just_for_you">News Just For You</string>
+    <string name="title_favorite_news">Favorite News</string>
+
 </resources>
