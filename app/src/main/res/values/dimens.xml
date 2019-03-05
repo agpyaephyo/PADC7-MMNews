@@ -33,6 +33,7 @@
     <dimen name="text_big_3x">80sp</dimen>
 
     <!-- App specific values -->
+    <dimen name="small_logo_size">32dp</dimen>
     <dimen name="logo_size">80dp</dimen>
     <dimen name="size_tappable_small">48dp</dimen>
     <dimen name="button_large_size">54dp</dimen>
@@ -41,4 +42,6 @@
     <dimen name="news_details_appbar_height">256dp</dimen>
     <dimen name="bottom_sheet_height">350dp</dimen>
     <dimen name="left_menu_width">300dp</dimen>
+
+    <dimen name="news_logo_size">120dp</dimen>
 </resources>

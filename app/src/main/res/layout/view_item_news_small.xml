@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_medium">
+
+    <ImageView
+        android:id="@+id/iv_publication_logo"
+        android:layout_width="@dimen/small_logo_size"
+        android:layout_height="@dimen/small_logo_size"
+        android:src="@drawable/dummy_publication_logo"
+        />
+
+    <TextView
+        android:id="@+id/tv_publication_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:layout_toRightOf="@id/iv_publication_logo"
+        android:text="Eleven Media" />
+    
+    <ImageView
+        android:id="@+id/iv_news_logo"
+        android:layout_width="@dimen/news_logo_size"
+        android:layout_height="@dimen/news_logo_size"
+        android:src="@drawable/dummy_news_image"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_brief_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_news"
+        android:maxLines="3"
+        android:layout_below="@id/iv_publication_logo"
+        android:lineSpacingMultiplier="1.3"
+        android:textSize="@dimen/text_regular_2x"
+        android:layout_toLeftOf="@id/iv_news_logo"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 hours ago"
+        android:textColor="@color/secondary_text"
+        android:layout_below="@id/tv_brief_news"
+        android:textSize="@dimen/text_smaller"
+        android:layout_margin="@dimen/margin_medium"
+        />
+
+</RelativeLayout>

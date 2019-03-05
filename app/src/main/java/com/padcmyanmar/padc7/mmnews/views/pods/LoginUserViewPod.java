@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 public class LoginUserViewPod extends RelativeLayout {
 
+
     public LoginUserViewPod(Context context) {
         super(context);
     }

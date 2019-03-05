@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
 
-public class NewsViewHolder extends RecyclerView.ViewHolder {
+public class NewsViewHolder extends BaseNewsViewHolder {
 
     private NewsItemDelegate mDelegate;
 
