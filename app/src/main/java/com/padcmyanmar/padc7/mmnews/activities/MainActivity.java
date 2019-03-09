@@ -22,25 +22,33 @@ import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsAdapter;
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
 
-public class MainActivity extends AppCompatActivity implements NewsItemDelegate {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends BaseActivity implements NewsItemDelegate {
 
     private BottomSheetBehavior<NestedScrollView> mBottomSheetBehavior;
 
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.title_latest_news);
 
         setSupportActionBar(mToolbar);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,23 +80,6 @@ public class MainActivity extends AppCompatActivity implements NewsItemDelegate 
             @Override
             public void onClick(View v) {
                 mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                        */
-
-                if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                } else {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
             }
         });
 
@@ -125,6 +116,20 @@ public class MainActivity extends AppCompatActivity implements NewsItemDelegate 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.fab)
+    public void onTapFab(View view) {
+        /*
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+                */
+
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     @Override

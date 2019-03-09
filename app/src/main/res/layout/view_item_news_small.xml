@@ -11,7 +11,7 @@
         android:src="@drawable/dummy_publication_logo"
         />
 
-    <TextView
+    <org.mmtextview.components.MMTextView
         android:id="@+id/tv_publication_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:scaleType="centerCrop"
         />
 
-    <TextView
+    <org.mmtextview.components.MMTextView
         android:id="@+id/tv_brief_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:ellipsize="end"
         />
 
-    <TextView
+    <org.mmtextview.components.MMTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2 hours ago"

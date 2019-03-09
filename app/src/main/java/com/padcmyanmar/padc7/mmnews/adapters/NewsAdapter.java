@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.padcmyanmar.padc7.mmnews.R;
+import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
 import com.padcmyanmar.padc7.mmnews.views.holders.BaseNewsViewHolder;
 import com.padcmyanmar.padc7.mmnews.views.holders.NewsSmallViewHolder;
 import com.padcmyanmar.padc7.mmnews.views.holders.NewsViewHolder;
 
-public class NewsAdapter extends RecyclerView.Adapter<BaseNewsViewHolder> {
+public class NewsAdapter extends BaseRecyclerAdapter<BaseNewsViewHolder, NewsVO> {
 
     private static final int REGULAR_NEWS_VIEW = 1234;
     private static final int SMALL_NEWS_VIEW = 2345;

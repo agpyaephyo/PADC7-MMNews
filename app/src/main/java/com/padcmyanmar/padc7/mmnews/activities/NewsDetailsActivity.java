@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsDetailsImagesAdapter;
 
-public class NewsDetailsActivity extends AppCompatActivity {
+public class NewsDetailsActivity extends BaseActivity {
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, NewsDetailsActivity.class);
