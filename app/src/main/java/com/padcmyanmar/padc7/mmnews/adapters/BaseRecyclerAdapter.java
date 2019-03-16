@@ -22,7 +22,7 @@ public abstract class BaseRecyclerAdapter<T extends BaseViewHolder<W>, W> extend
     }
 
     @Override
-    public void onBindViewHolder(@NonNull T holder, int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull T holder, int position) {
         holder.bindData(mData.get(position));
     }
 

@@ -41,16 +41,6 @@ public class NewsAdapter extends BaseRecyclerAdapter<BaseNewsViewHolder, NewsVO>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseNewsViewHolder viewHolder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 12;
-    }
-
-    @Override
     public int getItemViewType(int position) {
         if (position % 3 == 0) {
             return REGULAR_NEWS_VIEW;

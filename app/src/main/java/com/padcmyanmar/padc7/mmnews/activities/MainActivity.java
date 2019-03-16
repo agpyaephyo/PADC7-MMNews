@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +18,12 @@ import android.widget.Toast;
 
 import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsAdapter;
+import com.padcmyanmar.padc7.mmnews.data.models.NewsModel;
+import com.padcmyanmar.padc7.mmnews.data.models.NewsModelImpl;
+import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +41,9 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+
+    private NewsAdapter mNewsAdapter;
+    private NewsModel mNewsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +93,16 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
         rvNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL, false));
 
-        NewsAdapter newsAdapter = new NewsAdapter(this);
-        rvNews.setAdapter(newsAdapter);
+        mNewsAdapter = new NewsAdapter(this);
+        rvNews.setAdapter(mNewsAdapter);
 
         NestedScrollView nsvBottomSheet = findViewById(R.id.nsv_bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(nsvBottomSheet);
 
         mBottomSheetBehavior.setPeekHeight(0);
+        mNewsModel = NewsModelImpl.getObjInstance();
+
+        bindNews(true);
     }
 
     @Override
@@ -136,5 +145,23 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
     public void onTapNewsItem() {
         Intent intent = NewsDetailsActivity.newIntent(getApplicationContext());
         startActivity(intent);
+    }
+
+    private void bindNews(boolean isForce) {
+        List<NewsVO> news = mNewsModel.getNews(new NewsModel.NewsDelegate() {
+            @Override
+            public void onNewsFetchedFromNetwork(List<NewsVO> newsList) {
+                mNewsAdapter.setNewData(newsList);
+            }
+
+            @Override
+            public void onErrorNewsFetch(String msg) {
+                //Toast Msg.
+            }
+        }, isForce);
+
+        if (news != null) {
+            mNewsAdapter.setNewData(news);
+        }
     }
 }
