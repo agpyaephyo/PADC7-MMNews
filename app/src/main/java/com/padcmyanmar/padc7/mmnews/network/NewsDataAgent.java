@@ -1,5 +1,7 @@
 package com.padcmyanmar.padc7.mmnews.network;
 
+import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
+
 public interface NewsDataAgent {
 
     String MMNEWS_BASE_URL = "http://padcmyanmar.com/padc-3/mm-news/apis/";
@@ -10,7 +12,7 @@ public interface NewsDataAgent {
     String PARAM_PAGE = "page";
 
     void loadNews(int page, String accessToken,
-                  HttpUrlConnectionDA.GetNewsTask.NewsResponseDelegate newsResponseDelegate);
+                  NewsResponseDelegate newsResponseDelegate);
 
     void login(String phoneNumber, String password);
 

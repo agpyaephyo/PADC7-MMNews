@@ -6,8 +6,11 @@ import com.padcmyanmar.padc7.mmnews.data.vos.CommentVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.FavoriteVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.SendToVO;
+import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
 import com.padcmyanmar.padc7.mmnews.network.HttpUrlConnectionDA;
 import com.padcmyanmar.padc7.mmnews.network.NewsDataAgent;
+import com.padcmyanmar.padc7.mmnews.network.OkHttpDA;
+import com.padcmyanmar.padc7.mmnews.network.RetrofitDA;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +29,9 @@ public class NewsModelImpl extends BaseModel implements NewsModel {
 
     private NewsModelImpl() {
         mNews = new HashMap<>();
-        mDataAgent = HttpUrlConnectionDA.getInstance();
+        //mDataAgent = HttpUrlConnectionDA.getInstance();
+        //mDataAgent = OkHttpDA.getInstance();
+        mDataAgent = RetrofitDA.getInstance();
     }
 
     public static NewsModelImpl getObjInstance() {
@@ -57,7 +62,7 @@ public class NewsModelImpl extends BaseModel implements NewsModel {
         if (mNews.isEmpty() || isForce) {
                 mDataAgent.loadNews(1,
                     DUMMY_ACCESS_TOKEN,
-                    new HttpUrlConnectionDA.GetNewsTask.NewsResponseDelegate() {
+                    new NewsResponseDelegate() {
                         @Override
                         public void onSuccess(List<NewsVO> newsList) {
                             for (NewsVO news : newsList) {

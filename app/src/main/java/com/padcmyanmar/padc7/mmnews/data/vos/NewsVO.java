@@ -2,6 +2,7 @@ package com.padcmyanmar.padc7.mmnews.data.vos;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsVO {
@@ -46,6 +47,10 @@ public class NewsVO {
     }
 
     public List<String> getImages() {
+        if (images == null)
+            //throw new NullPointerException("Images in NewsVO shouldn't be null.");
+            return new ArrayList<>();
+
         return images;
     }
 
@@ -67,5 +72,13 @@ public class NewsVO {
 
     public List<SendToVO> getSendTos() {
         return sendTos;
+    }
+
+    public String getHeroImage() {
+        if (getImages().isEmpty()) {
+            //throw new IndexOutOfBoundsException("Images in this news - " + newsId + " - is null");
+            return null;
+        }
+        return getImages().get(0);
     }
 }

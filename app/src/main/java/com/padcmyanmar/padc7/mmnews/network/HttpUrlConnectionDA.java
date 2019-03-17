@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
+import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
 import com.padcmyanmar.padc7.mmnews.network.responses.GetNewsResponse;
 
 import org.apache.http.NameValuePair;
@@ -38,8 +39,7 @@ public class HttpUrlConnectionDA implements NewsDataAgent {
     }
 
     @Override
-    public void loadNews(int page, String accessToken,
-                         GetNewsTask.NewsResponseDelegate newsResponseDelegate) {
+    public void loadNews(int page, String accessToken, NewsResponseDelegate newsResponseDelegate) {
         new GetNewsTask(accessToken, page, newsResponseDelegate).execute();
     }
 
@@ -175,12 +175,6 @@ public class HttpUrlConnectionDA implements NewsDataAgent {
                 newsResponseDelegate.onFail("Response is null.");
             }
 
-        }
-
-        public interface NewsResponseDelegate {
-            void onSuccess(List<NewsVO> newsList);
-
-            void onFail(String msg);
         }
     }
 }
