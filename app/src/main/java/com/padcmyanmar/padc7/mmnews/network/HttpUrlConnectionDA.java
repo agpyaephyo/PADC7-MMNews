@@ -3,8 +3,8 @@ package com.padcmyanmar.padc7.mmnews.network;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
-import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
+import com.padcmyanmar.padc7.mmnews.delegates.GetNewsDelegate;
+import com.padcmyanmar.padc7.mmnews.delegates.LoginDelegate;
 import com.padcmyanmar.padc7.mmnews.network.responses.GetNewsResponse;
 
 import org.apache.http.NameValuePair;
@@ -39,14 +39,15 @@ public class HttpUrlConnectionDA implements NewsDataAgent {
     }
 
     @Override
-    public void loadNews(int page, String accessToken, NewsResponseDelegate newsResponseDelegate) {
+    public void loadNews(int page, String accessToken, GetNewsDelegate newsResponseDelegate) {
         new GetNewsTask(accessToken, page, newsResponseDelegate).execute();
     }
 
     @Override
-    public void login(String phoneNumber, String password) {
+    public void login(String emailOrPhoneNumber, String password, LoginDelegate loginDelegate) {
 
     }
+
 
     @Override
     public void register(String phoneNUmber, String name, String password) {
@@ -57,9 +58,9 @@ public class HttpUrlConnectionDA implements NewsDataAgent {
 
         private String accessToken;
         private int page;
-        private NewsResponseDelegate newsResponseDelegate;
+        private GetNewsDelegate newsResponseDelegate;
 
-        public GetNewsTask(String accessToken, int page, NewsResponseDelegate newsResponseDelegate) {
+        public GetNewsTask(String accessToken, int page, GetNewsDelegate newsResponseDelegate) {
             this.accessToken = accessToken;
             this.page = page;
             this.newsResponseDelegate = newsResponseDelegate;

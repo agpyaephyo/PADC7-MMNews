@@ -5,16 +5,7 @@ import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 
 import java.util.List;
 
-public class GetNewsResponse {
-
-    @SerializedName("code")
-    private int code;
-
-    @SerializedName("message")
-    private String message;
-
-    @SerializedName("apiVersion")
-    private String apiVersion;
+public class GetNewsResponse extends BaseResponse {
 
     @SerializedName("page")
     private int page;
@@ -22,27 +13,11 @@ public class GetNewsResponse {
     @SerializedName("mmNews")
     private List<NewsVO> newsList;
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getApiVersion() {
-        return apiVersion;
-    }
-
     public int getPage() {
         return page;
     }
 
     public List<NewsVO> getNewsList() {
         return newsList;
-    }
-
-    public boolean isResponseSuccess() {
-        return code == 200;
     }
 }

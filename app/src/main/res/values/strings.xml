@@ -37,4 +37,7 @@
     <string name="title_news_just_for_you">News Just For You</string>
     <string name="title_favorite_news">Favorite News</string>
 
+    <string name="btn_forgot_password"><u><i>Forgot Password</i></u></string>
+    <string name="btn_to_register"><u><i>New User ? Register</i></u></string>
+
 </resources>

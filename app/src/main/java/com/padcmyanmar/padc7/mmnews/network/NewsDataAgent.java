@@ -1,6 +1,7 @@
 package com.padcmyanmar.padc7.mmnews.network;
 
-import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
+import com.padcmyanmar.padc7.mmnews.delegates.GetNewsDelegate;
+import com.padcmyanmar.padc7.mmnews.delegates.LoginDelegate;
 
 public interface NewsDataAgent {
 
@@ -12,9 +13,10 @@ public interface NewsDataAgent {
     String PARAM_PAGE = "page";
 
     void loadNews(int page, String accessToken,
-                  NewsResponseDelegate newsResponseDelegate);
+                  GetNewsDelegate newsResponseDelegate);
 
-    void login(String phoneNumber, String password);
+    void login(String emailOrPhoneNumber, String password,
+               LoginDelegate loginDelegate);
 
     void register(String phoneNUmber, String name, String password);
 }

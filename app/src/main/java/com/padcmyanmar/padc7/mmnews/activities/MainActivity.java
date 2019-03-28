@@ -1,5 +1,6 @@
 package com.padcmyanmar.padc7.mmnews.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,8 +21,11 @@ import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsAdapter;
 import com.padcmyanmar.padc7.mmnews.data.models.NewsModel;
 import com.padcmyanmar.padc7.mmnews.data.models.NewsModelImpl;
+import com.padcmyanmar.padc7.mmnews.data.models.UserModel;
+import com.padcmyanmar.padc7.mmnews.data.models.UserModelImpl;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
+import com.padcmyanmar.padc7.mmnews.views.pods.LoginUserViewPod;
 
 import java.util.List;
 
@@ -43,7 +47,14 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
     Toolbar mToolbar;
 
     private NewsAdapter mNewsAdapter;
+
     private NewsModel mNewsModel;
+    private UserModel mUserModel;
+
+    public static Intent newIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +111,12 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
         mBottomSheetBehavior = BottomSheetBehavior.from(nsvBottomSheet);
 
         mBottomSheetBehavior.setPeekHeight(0);
-        mNewsModel = NewsModelImpl.getObjInstance();
+
+        mNewsModel = NewsModelImpl.getInstance();
+        mUserModel = UserModelImpl.getInstance();
+
+        LoginUserViewPod vpLoginUser = (LoginUserViewPod) mNavigationView.getHeaderView(0);
+        vpLoginUser.setData(mUserModel.getLoginUser());
 
         bindNews(true);
     }

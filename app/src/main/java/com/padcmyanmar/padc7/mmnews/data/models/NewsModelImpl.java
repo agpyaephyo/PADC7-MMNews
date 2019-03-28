@@ -6,10 +6,8 @@ import com.padcmyanmar.padc7.mmnews.data.vos.CommentVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.FavoriteVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.SendToVO;
-import com.padcmyanmar.padc7.mmnews.delegates.NewsResponseDelegate;
-import com.padcmyanmar.padc7.mmnews.network.HttpUrlConnectionDA;
+import com.padcmyanmar.padc7.mmnews.delegates.GetNewsDelegate;
 import com.padcmyanmar.padc7.mmnews.network.NewsDataAgent;
-import com.padcmyanmar.padc7.mmnews.network.OkHttpDA;
 import com.padcmyanmar.padc7.mmnews.network.RetrofitDA;
 
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ import java.util.Map;
 
 public class NewsModelImpl extends BaseModel implements NewsModel {
 
-    private static NewsModelImpl objInstance;
+    private static NewsModelImpl instance;
 
     private Map<String, NewsVO> mNews;
 
@@ -34,11 +32,11 @@ public class NewsModelImpl extends BaseModel implements NewsModel {
         mDataAgent = RetrofitDA.getInstance();
     }
 
-    public static NewsModelImpl getObjInstance() {
-        if (objInstance == null) {
-            objInstance = new NewsModelImpl();
+    public static NewsModelImpl getInstance() {
+        if (instance == null) {
+            instance = new NewsModelImpl();
         }
-        return objInstance;
+        return instance;
     }
 
     @Override
@@ -60,9 +58,9 @@ public class NewsModelImpl extends BaseModel implements NewsModel {
     public @Nullable
     List<NewsVO> getNews(final NewsDelegate newsDelegate, boolean isForce) {
         if (mNews.isEmpty() || isForce) {
-                mDataAgent.loadNews(1,
+            mDataAgent.loadNews(1,
                     DUMMY_ACCESS_TOKEN,
-                    new NewsResponseDelegate() {
+                    new GetNewsDelegate() {
                         @Override
                         public void onSuccess(List<NewsVO> newsList) {
                             for (NewsVO news : newsList) {

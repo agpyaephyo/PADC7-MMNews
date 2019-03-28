@@ -4,9 +4,7 @@ import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 
 import java.util.List;
 
-public interface NewsResponseDelegate {
+public interface GetNewsDelegate extends BaseNetworkDelegate {
 
     void onSuccess(List<NewsVO> newsList);
-
-    void onFail(String msg);
 }
