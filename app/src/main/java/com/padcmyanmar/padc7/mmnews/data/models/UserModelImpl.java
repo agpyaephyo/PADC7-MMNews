@@ -1,9 +1,13 @@
 package com.padcmyanmar.padc7.mmnews.data.models;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.padcmyanmar.padc7.mmnews.data.vos.LoginUserVO;
 import com.padcmyanmar.padc7.mmnews.delegates.LoginDelegate;
 import com.padcmyanmar.padc7.mmnews.network.NewsDataAgent;
 import com.padcmyanmar.padc7.mmnews.network.RetrofitDA;
+import com.padcmyanmar.padc7.mmnews.persistence.NewsDatabase;
 
 public class UserModelImpl extends BaseModel implements UserModel {
 
@@ -11,15 +15,20 @@ public class UserModelImpl extends BaseModel implements UserModel {
 
     private NewsDataAgent mDataAgent;
 
-    private LoginUserVO mLoginUser;
+    private NewsDatabase mNewsDB;
 
-    private UserModelImpl() {
+    private UserModelImpl(Context context) {
         mDataAgent = RetrofitDA.getInstance();
+        mNewsDB = NewsDatabase.getDatabase(context);
+    }
+
+    public static void initUserModel(Context context) {
+        instance = new UserModelImpl(context);
     }
 
     public static UserModel getInstance() {
         if (instance == null) {
-            instance = new UserModelImpl();
+            throw new RuntimeException("UserModel should have been initialized before using it.");
         }
         return instance;
     }
@@ -29,7 +38,8 @@ public class UserModelImpl extends BaseModel implements UserModel {
         mDataAgent.login(emailOrPassword, password, new LoginDelegate() {
             @Override
             public void onSuccess(LoginUserVO loginUser) {
-                mLoginUser = loginUser;
+                long userId = mNewsDB.loginUserDao().inserLoginUser(loginUser);
+                Log.d("", "userId : " + userId);
                 loginDelegate.onSuccess(loginUser);
             }
 
@@ -42,6 +52,7 @@ public class UserModelImpl extends BaseModel implements UserModel {
 
     @Override
     public LoginUserVO getLoginUser() {
-        return mLoginUser;
+        LoginUserVO loginUser = mNewsDB.loginUserDao().getLoginUser();
+        return loginUser;
     }
 }
