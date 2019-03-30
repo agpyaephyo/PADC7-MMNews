@@ -20,9 +20,11 @@ public abstract class NewsCallback<T extends BaseResponse, W extends BaseNetwork
         T newsResponse = response.body();
         if (newsResponse == null) {
             networkDelegate.onFail("Response is null.");
+            return;
         } else {
             if (!newsResponse.isResponseSuccess()) {
                 networkDelegate.onFail(newsResponse.getMessage());
+                return;
             }
         }
     }

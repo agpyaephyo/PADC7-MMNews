@@ -51,9 +51,7 @@ public class RetrofitDA implements NewsDataAgent {
             public void onResponse(Call<GetNewsResponse> call, Response<GetNewsResponse> response) {
                 super.onResponse(call, response);
                 GetNewsResponse newsResponse = response.body();
-                if (newsResponse != null && newsResponse.isResponseSuccess()) {
-                    networkDelegate.onSuccess(newsResponse.getNewsList());
-                }
+                networkDelegate.onSuccess(newsResponse.getNewsList());
             }
         });
         /*
@@ -88,10 +86,8 @@ public class RetrofitDA implements NewsDataAgent {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 super.onResponse(call, response);
                 LoginResponse loginResponse = response.body();
-                if (loginResponse != null && loginResponse.isResponseSuccess()) {
-                    LoginUserVO loginUser = loginResponse.getLoginUser();
-                    networkDelegate.onSuccess(loginUser);
-                }
+                LoginUserVO loginUser = loginResponse.getLoginUser();
+                networkDelegate.onSuccess(loginUser);
             }
         });
     }
