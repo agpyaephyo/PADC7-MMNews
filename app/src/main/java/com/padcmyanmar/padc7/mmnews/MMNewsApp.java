@@ -2,6 +2,7 @@ package com.padcmyanmar.padc7.mmnews;
 
 import android.app.Application;
 
+import com.padcmyanmar.padc7.mmnews.data.models.NewsModelImpl;
 import com.padcmyanmar.padc7.mmnews.data.models.UserModelImpl;
 
 public class MMNewsApp extends Application {
@@ -10,5 +11,6 @@ public class MMNewsApp extends Application {
     public void onCreate() {
         super.onCreate();
         UserModelImpl.initUserModel(getApplicationContext());
+        NewsModelImpl.initNewsModel(getApplicationContext());
     }
 }

@@ -1,5 +1,8 @@
 package com.padcmyanmar.padc7.mmnews.data.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import com.padcmyanmar.padc7.mmnews.data.vos.CommentVO;
@@ -7,34 +10,27 @@ import com.padcmyanmar.padc7.mmnews.data.vos.FavoriteVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.data.vos.SendToVO;
 import com.padcmyanmar.padc7.mmnews.delegates.GetNewsDelegate;
-import com.padcmyanmar.padc7.mmnews.network.NewsDataAgent;
-import com.padcmyanmar.padc7.mmnews.network.RetrofitDA;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class NewsModelImpl extends BaseModel implements NewsModel {
 
+    private static final String DUMMY_ACCESS_TOKEN = "b002c7e1a528b7cb460933fc2875e916";
+    private static final String KEY_NEWS_PAGE = "KEY_NEWS_PAGE";
+
     private static NewsModelImpl instance;
 
-    private Map<String, NewsVO> mNews;
+    private NewsModelImpl(Context context) {
+        super(context);
+    }
 
-    private NewsDataAgent mDataAgent;
-
-    private static final String DUMMY_ACCESS_TOKEN = "b002c7e1a528b7cb460933fc2875e916";
-
-    private NewsModelImpl() {
-        mNews = new HashMap<>();
-        //mDataAgent = HttpUrlConnectionDA.getInstance();
-        //mDataAgent = OkHttpDA.getInstance();
-        mDataAgent = RetrofitDA.getInstance();
+    public static void initNewsModel(Context context) {
+        instance = new NewsModelImpl(context);
     }
 
     public static NewsModelImpl getInstance() {
         if (instance == null) {
-            instance = new NewsModelImpl();
+            throw new RuntimeException("NewsModelImpl should be initialized before using it.");
         }
         return instance;
     }
@@ -56,28 +52,67 @@ public class NewsModelImpl extends BaseModel implements NewsModel {
 
     @Override
     public @Nullable
-    List<NewsVO> getNews(final NewsDelegate newsDelegate, boolean isForce) {
-        if (mNews.isEmpty() || isForce) {
-            mDataAgent.loadNews(1,
+    List<NewsVO> getNews(final NewsDelegate newsDelegate, final boolean isForce) {
+        int newsPage = getNewsPage();
+        if (isForce) {
+            newsPage = 1;
+        }
+
+        if (mNewsDB.isNewsEmpty() || isForce) {
+            mDataAgent.loadNews(newsPage,
                     DUMMY_ACCESS_TOKEN,
                     new GetNewsDelegate() {
                         @Override
                         public void onSuccess(List<NewsVO> newsList) {
-                            for (NewsVO news : newsList) {
-                                mNews.put(news.getNewsId(), news);
+                            if (!isForce) {
+                                setNewsPage(getNewsPage() + 1);
                             }
-                            newsDelegate.onNewsFetchedFromNetwork(new ArrayList<>(mNews.values()));
+
+                            int insertedNewsCount = mNewsDB.newsDao().saveNews(newsList, mNewsDB.commentDao());
+                            List<NewsVO> newsListDB = mNewsDB.newsDao().loadNews();
+                            newsDelegate.onSuccess(newsListDB);
                         }
 
                         @Override
                         public void onFail(String msg) {
-                            newsDelegate.onErrorNewsFetch(msg);
+                            newsDelegate.onError(msg);
                         }
                     });
         } else {
-            return new ArrayList<>(mNews.values());
+            List<NewsVO> newsList = mNewsDB.newsDao().loadNews();
+            return newsList;
         }
 
         return null;
+    }
+
+    @Override
+    public void loadMoreNews(final NewsDelegate newsDelegate) {
+        mDataAgent.loadNews(getNewsPage(),
+                DUMMY_ACCESS_TOKEN,
+                new GetNewsDelegate() {
+                    @Override
+                    public void onSuccess(List<NewsVO> newsList) {
+                        setNewsPage(getNewsPage() + 1);
+                        int insertedNewsCount = mNewsDB.newsDao().saveNews(newsList, mNewsDB.commentDao());
+                        List<NewsVO> newsListDB = mNewsDB.newsDao().loadNews();
+                        newsDelegate.onSuccess(newsListDB);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        newsDelegate.onError(msg);
+                    }
+                });
+    }
+
+    private int getNewsPage() {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sharedPreferences.getInt(KEY_NEWS_PAGE, 1);
+    }
+
+    private void setNewsPage(int newPageNumber) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        sharedPreferences.edit().putInt(KEY_NEWS_PAGE, newPageNumber).apply();
     }
 }

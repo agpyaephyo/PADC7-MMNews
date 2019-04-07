@@ -22,23 +22,30 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|snap"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:navigationIcon="@drawable/ic_menu_white_24dp"
-                />
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
 
-        <RelativeLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.RecyclerView
+            <com.padcmyanmar.padc7.mmnews.components.SmartRecyclerView
                 android:id="@+id/rv_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+            <include
+                android:id="@+id/vp_empty"
+                layout="@layout/view_pod_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -74,7 +81,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/view_pod_login_user"
         app:itemTextColor="@drawable/state_left_menu_item"
-        app:menu="@menu/left_menu_news"
-        />
+        app:menu="@menu/left_menu_news" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -5,21 +5,13 @@ import android.util.Log;
 
 import com.padcmyanmar.padc7.mmnews.data.vos.LoginUserVO;
 import com.padcmyanmar.padc7.mmnews.delegates.LoginDelegate;
-import com.padcmyanmar.padc7.mmnews.network.NewsDataAgent;
-import com.padcmyanmar.padc7.mmnews.network.RetrofitDA;
-import com.padcmyanmar.padc7.mmnews.persistence.NewsDatabase;
 
 public class UserModelImpl extends BaseModel implements UserModel {
 
     private static UserModel instance;
 
-    private NewsDataAgent mDataAgent;
-
-    private NewsDatabase mNewsDB;
-
     private UserModelImpl(Context context) {
-        mDataAgent = RetrofitDA.getInstance();
-        mNewsDB = NewsDatabase.getDatabase(context);
+        super(context);
     }
 
     public static void initUserModel(Context context) {
@@ -54,5 +46,15 @@ public class UserModelImpl extends BaseModel implements UserModel {
     public LoginUserVO getLoginUser() {
         LoginUserVO loginUser = mNewsDB.loginUserDao().getLoginUser();
         return loginUser;
+    }
+
+    @Override
+    public boolean isUserLogin() {
+        return mNewsDB.loginUserDao().getLoginUser() != null;
+    }
+
+    @Override
+    public void onUserLogout() {
+        mNewsDB.loginUserDao().deleteLoginUser();
     }
 }

@@ -18,10 +18,12 @@ public interface NewsModel {
     //Get News.
     List<NewsVO> getNews(NewsDelegate newsDelegate, boolean isForce);
 
+    void loadMoreNews(NewsDelegate newsDelegate);
+
     interface NewsDelegate {
 
-        void onNewsFetchedFromNetwork(List<NewsVO> newsList);
+        void onSuccess(List<NewsVO> newsList);
 
-        void onErrorNewsFetch(String msg);
+        void onError(String msg);
     }
 }

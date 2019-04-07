@@ -9,8 +9,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +19,12 @@ import android.widget.Toast;
 
 import com.padcmyanmar.padc7.mmnews.R;
 import com.padcmyanmar.padc7.mmnews.adapters.NewsAdapter;
+import com.padcmyanmar.padc7.mmnews.components.SmartRecyclerView;
+import com.padcmyanmar.padc7.mmnews.components.SmartScrollListener;
 import com.padcmyanmar.padc7.mmnews.data.models.NewsModel;
-import com.padcmyanmar.padc7.mmnews.data.models.NewsModelImpl;
-import com.padcmyanmar.padc7.mmnews.data.models.UserModel;
-import com.padcmyanmar.padc7.mmnews.data.models.UserModelImpl;
 import com.padcmyanmar.padc7.mmnews.data.vos.NewsVO;
 import com.padcmyanmar.padc7.mmnews.delegates.NewsItemDelegate;
+import com.padcmyanmar.padc7.mmnews.views.pods.EmptyViewPod;
 import com.padcmyanmar.padc7.mmnews.views.pods.LoginUserViewPod;
 
 import java.util.List;
@@ -46,10 +46,18 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.rv_news)
+    SmartRecyclerView rvNews;
+
+    @BindView(R.id.vp_empty)
+    EmptyViewPod vpEmpty;
+
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private NewsAdapter mNewsAdapter;
 
-    private NewsModel mNewsModel;
-    private UserModel mUserModel;
+    private SmartScrollListener mSmartScrollListener;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -100,25 +108,73 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
             }
         });
 
-        RecyclerView rvNews = findViewById(R.id.rv_news);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNewsModel.getNews(new NewsModel.NewsDelegate() {
+                    @Override
+                    public void onSuccess(List<NewsVO> newsList) {
+                        mNewsAdapter.setNewData(newsList);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+
+                    }
+                }, true);
+            }
+        });
+
+        mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
+            @Override
+            public void onListEndReach() {
+                Toast.makeText(getApplicationContext(), "onListEndReach", Toast.LENGTH_LONG).show();
+                mNewsModel.loadMoreNews(new NewsModel.NewsDelegate() {
+                    @Override
+                    public void onSuccess(List<NewsVO> newsList) {
+                        //mNewsAdapter.appendNewData(newsList);
+                        mNewsAdapter.setNewData(newsList);
+                    }
+
+                    @Override
+                    public void onError(String msg) {
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        rvNews.addOnScrollListener(mSmartScrollListener);
+        rvNews.setEmptyView(vpEmpty);
         rvNews.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL, false));
 
         mNewsAdapter = new NewsAdapter(this);
         rvNews.setAdapter(mNewsAdapter);
 
+        bindNews();
+
         NestedScrollView nsvBottomSheet = findViewById(R.id.nsv_bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(nsvBottomSheet);
 
         mBottomSheetBehavior.setPeekHeight(0);
 
-        mNewsModel = NewsModelImpl.getInstance();
-        mUserModel = UserModelImpl.getInstance();
+        if (!mUserModel.isUserLogin()) {
+            //User hasn't login
+            navigateToLoginScreen();
+            return;
+        }
 
         LoginUserViewPod vpLoginUser = (LoginUserViewPod) mNavigationView.getHeaderView(0);
         vpLoginUser.setData(mUserModel.getLoginUser());
-
-        bindNews(true);
+        vpLoginUser.setDelegate(new LoginUserViewPod.LoginUserViewPodDelegate() {
+            @Override
+            public void onTapLogout() {
+                mUserModel.onUserLogout();
+                navigateToLoginScreen();
+            }
+        });
     }
 
     @Override
@@ -163,21 +219,26 @@ public class MainActivity extends BaseActivity implements NewsItemDelegate {
         startActivity(intent);
     }
 
-    private void bindNews(boolean isForce) {
+    private void bindNews() {
         List<NewsVO> news = mNewsModel.getNews(new NewsModel.NewsDelegate() {
             @Override
-            public void onNewsFetchedFromNetwork(List<NewsVO> newsList) {
+            public void onSuccess(List<NewsVO> newsList) {
                 mNewsAdapter.setNewData(newsList);
             }
 
             @Override
-            public void onErrorNewsFetch(String msg) {
+            public void onError(String msg) {
                 //Toast Msg.
             }
-        }, isForce);
+        }, true);
 
         if (news != null) {
             mNewsAdapter.setNewData(news);
         }
+    }
+
+    private void navigateToLoginScreen() {
+        Intent intent = LoginActivity.newIntent(getApplicationContext());
+        startActivity(intent);
     }
 }

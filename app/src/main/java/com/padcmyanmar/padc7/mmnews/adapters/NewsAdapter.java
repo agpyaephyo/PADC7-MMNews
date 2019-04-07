@@ -42,7 +42,7 @@ public class NewsAdapter extends BaseRecyclerAdapter<BaseNewsViewHolder, NewsVO>
 
     @Override
     public int getItemViewType(int position) {
-        if (position % 3 == 0) {
+        if (position % 1 == 0) {
             return REGULAR_NEWS_VIEW;
         } else {
             return SMALL_NEWS_VIEW;
